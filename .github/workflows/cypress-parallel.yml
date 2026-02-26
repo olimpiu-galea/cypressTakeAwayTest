@@ -1,0 +1,53 @@
+name: Cypress Parallel - 3 Batches
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        batch:
+          - cypress/e2e/01_takeAwayTests/batch1/**/*.cy.*
+          - cypress/e2e/01_takeAwayTests/batch2/**/*.cy.*
+          - cypress/e2e/01_takeAwayTests/batch3/**/*.cy.*
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress batch
+        run: |
+          echo "Running specs from: ${{ matrix.batch }}"
+          npx cypress run --spec "${{ matrix.batch }}"
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.batch }}
+          path: cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: videos-${{ matrix.batch }}
+          path: cypress/videos
+          if-no-files-found: ignore
