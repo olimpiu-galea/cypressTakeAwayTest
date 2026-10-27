@@ -1,0 +1,24 @@
+{
+  "name": "cypresstakeawaytest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olimpiu-galea/cypressTakeAwayTest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olimpiu-galea/cypressTakeAwayTest/issues"
+  },
+  "homepage": "https://github.com/olimpiu-galea/cypressTakeAwayTest#readme",
+  "devDependencies": {
+    "cypress": "^16.2.0",
+    "cypress-iframe": "^1.0.1"
+  }
+}
